@@ -48,11 +48,11 @@
 #    dest: "{{ sql_install_temp_folder }}"
 #    remote_src: true
 
-# - name: Generate configuration ini
-#   ansible.builtin.template:
-#     src: "{{ item.config }}"
-#     dest: "{{ sql_install_temp_folder }}\\Configuration.ini"
-#   loop: "{{ sql_install_iso_source }}"
+- name: Generate configuration ini
+  ansible.builtin.template:
+    src: "{{ item.config }}"
+    dest: "{{ sql_install_temp_folder }}\\Configuration.ini"
+  loop: "{{ sql_install_iso_source }}"
 
 - name: Create an instance name variable that includes localhost.  Default instance.
   ansible.builtin.set_fact:
