@@ -48,6 +48,14 @@
 #    dest: "{{ sql_install_temp_folder }}"
 #    remote_src: true
 
+
+- name: Mount SQL Server ISO
+  community.windows.win_disk_image:
+    image_path: "{{ sql_install_temp_folder }}\\{{ item.name }}"
+    state: present
+  loop: "{{ sql_install_iso_source }}"
+  register: disk_image_out
+
 - name: Generate configuration ini
   ansible.builtin.template:
     src: "{{ item.config }}"
