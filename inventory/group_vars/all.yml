@@ -3,7 +3,7 @@
 # The role looks for: {{ sql_install_share }}/{{ item.version }}/{{ item.name }}
 # Example: sql_install_share/SQL2025/SQLServer2025-x64-ENU.iso
 # Use no trailing slash to avoid double slashes in the built path.
-sql_install_share: "/home/joebrown/ISO"
+sql_install_share: /home/joebrown/ISO
 
 # Optional: fetch ISO from a URL instead of placing it manually.
 # Set sql_install_iso_url (and optionally sql_install_iso_checksum) to download

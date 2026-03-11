@@ -48,7 +48,6 @@
 #    dest: "{{ sql_install_temp_folder }}"
 #    remote_src: true
 
-
 - name: Mount SQL Server ISO
   community.windows.win_disk_image:
     image_path: "{{ sql_install_temp_folder }}\\{{ item.name }}"
@@ -68,13 +67,13 @@
 
 - name: Create an instance name variable that includes localhost.  Default instance.
   ansible.builtin.set_fact:
-    instance_name_var: "localhost"
+    instance_name_var: localhost
   when:
     - sql_install_instance_name == "MSSQLSERVER"
 
 - name: Create an instance name variable that includes localhost and instance name.
   ansible.builtin.set_fact:
-    instance_name_var: 'localhost\{{ sql_install_instance_name }}'
+    instance_name_var: localhost\{{ sql_install_instance_name }}
   when:
     - sql_install_instance_name != "MSSQLSERVER"
 

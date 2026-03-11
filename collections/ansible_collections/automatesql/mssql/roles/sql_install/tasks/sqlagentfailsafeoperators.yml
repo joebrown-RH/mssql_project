@@ -2,19 +2,19 @@
 - name: Create the DBA team operator
   ansible.windows.win_dsc:
     resource_name: SqlAgentOperator
-    Ensure: "Present"
+    Ensure: Present
     Name: "{{ item.name }}"
     EmailAddress: "{{ item.email }}"
-    ServerName: "localhost"
+    ServerName: localhost
     InstanceName: "{{ sql_install_instance_name }}"
   loop: "{{ sql_install_sqlagent_operator }}"
 
 - name: Configure Failsafe operator
   ansible.windows.win_dsc:
     resource_name: SqlAgentFailsafe
-    Ensure: "Present"
+    Ensure: Present
     Name: "{{ item.name }}"
-    ServerName: "localhost"
+    ServerName: localhost
     Instancename: "{{ sql_install_instance_name }}"
-    NotificationMethod: "NotifyEmail"
+    NotificationMethod: NotifyEmail
   loop: "{{ sql_install_sqlagent_operator }}"

@@ -10,4 +10,3 @@
   ansible.builtin.pause:
     seconds: 3
   when: disk_image_out.changed
-  
