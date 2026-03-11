@@ -35,7 +35,7 @@
 
 - name: Copy SQL Server update
   ansible.windows.win_copy:
-    src: "{{ sql_install_share }}/{{ item.version }}/{{ item.name }}"
+    src: "{{ sql_install_temp_folder }}\\{{ item.name }}"
     dest: "{{ sql_install_temp_folder }}"
     remote_src: false
   loop: "{{ sql_install_update_source }}"
