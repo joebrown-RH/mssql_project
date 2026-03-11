@@ -1,0 +1,4 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "ansible.python.interpreterPath": "/usr/bin/python"
+}

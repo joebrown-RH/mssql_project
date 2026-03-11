@@ -1,0 +1,9 @@
+---
+ansible-navigator:
+  logging:
+    level: debug
+    append: false
+    file: $PWD/.logs/ansible-navigator.log
+
+  playbook-artifact:
+    enable: false
