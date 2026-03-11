@@ -1,7 +1,7 @@
 ---
 - name: "Check for existing module: {{ module_item }}"
   ansible.windows.win_powershell:
-    script: "Get-Module -ListAvailable -Name {{ module_item }}"
+    script: Get-Module -ListAvailable -Name {{ module_item }}
   register: module_check
   changed_when: false
   failed_when: false
@@ -20,7 +20,7 @@
     - name: "Install module from local path: {{ module_item }}"
       when: manage_powershell_modules_install_method == 'local'
       block:
-        - name: "Create temporary module directory on target for {{ module_item }}"
+        - name: Create temporary module directory on target for {{ module_item }}
           ansible.windows.win_file:
             path: "{{ manage_powershell_modules_temp_folder }}/{{ module_item }}"
             state: directory

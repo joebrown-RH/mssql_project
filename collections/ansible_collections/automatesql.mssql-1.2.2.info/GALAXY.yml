@@ -1,3 +1,4 @@
+---
 download_url: https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/automatesql-mssql-1.2.2.tar.gz
 format_version: 1.0.0
 name: mssql
