@@ -26,7 +26,7 @@
 
 - name: Copy SQL Server iso
   ansible.windows.win_copy:
-    src: "{{ sql_install_share }}/{{ item.version }}/{{ item.name }}"
+    src: "{{ sql_install_temp_folder }}\\{{ item.name }}"
     dest: "{{ sql_install_temp_folder }}\\"
     remote_src: true
   loop: "{{ sql_install_iso_source }}"
