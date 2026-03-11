@@ -1,0 +1,14 @@
+---
+# Override sql_install role: path on the Ansible controller where ISO files live.
+# The role looks for: {{ sql_install_share }}/{{ item.version }}/{{ item.name }}
+# Example: sql_install_share/SQL2025/SQLServer2025-x64-ENU.iso
+# Use no trailing slash to avoid double slashes in the built path.
+sql_install_share: "/home/joebrown/ISO"
+
+# Optional: fetch ISO from a URL instead of placing it manually.
+# Set sql_install_iso_url (and optionally sql_install_iso_checksum) to download
+# the ISO on the controller before the sql_install role runs. Leave empty to skip.
+# sql_install_iso_url: "https://internal.example.com/isos/SQLServer2025-x64-ENU.iso"
+# sql_install_iso_checksum: "sha256:abc123..."  # optional, recommended for large files
+sql_install_iso_url: ""
+sql_install_iso_checksum: ""
