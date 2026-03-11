@@ -1,0 +1,12 @@
+---
+- name: Install PowerShell modules
+  ansible.builtin.include_tasks: install_module.yml
+  loop: "{{ manage_powershell_modules_to_install }}"
+  loop_control:
+    loop_var: module_item
+
+- name: Cleanup temporary module directory
+  ansible.windows.win_file:
+    path: "{{ manage_powershell_modules_temp_folder }}"
+    state: absent
+  when: manage_powershell_modules_install_method == 'local'
