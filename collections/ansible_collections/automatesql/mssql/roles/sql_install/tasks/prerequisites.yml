@@ -37,7 +37,7 @@
   ansible.windows.win_copy:
     src: "{{ sql_install_temp_folder }}\\{{ item.name }}"
     dest: "{{ sql_install_temp_folder }}"
-    remote_src: false
+    remote_src: true
   loop: "{{ sql_install_update_source }}"
   when:
     - sql_install_enableupdates == "true"
@@ -46,7 +46,7 @@
   ansible.windows.win_copy:
     src: "files/sql_scripts/"
     dest: "{{ sql_install_temp_folder }}"
-    remote_src: false
+    remote_src: true
 
 # - name: Generate configuration ini
 #   ansible.builtin.template:
