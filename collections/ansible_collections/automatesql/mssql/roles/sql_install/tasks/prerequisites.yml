@@ -40,7 +40,7 @@
     remote_src: false
   loop: "{{ sql_install_update_source }}"
   when:
-    - sql_install_enableupdates == "false"
+    - sql_install_enableupdates == "true"
 
 - name: Copy SQL scripts
   ansible.windows.win_copy:
