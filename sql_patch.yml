@@ -1,0 +1,102 @@
+---
+- name: Patch SQL Server 2022
+  hosts: all
+  gather_facts: false
+
+  vars:
+    sql_cu_url: ""
+    sql_cu_filename: "SQLServer2022-CU-latest.exe"
+    backup_dest: 'C:\SQLBACKUP\PrePatch'
+
+  tasks:
+
+    - name: Capture pre-patch SQL version
+      ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
+      register: pre_version
+
+    - name: Get list of user databases
+      ansible.windows.win_shell: |
+        sqlcmd -S localhost -E -Q "SET NOCOUNT ON;
+          SELECT name FROM sys.databases WHERE database_id > 4 AND state_desc = 'ONLINE'" -h -1 -W
+      register: user_dbs
+
+    - name: Backup all user databases
+      ansible.windows.win_shell: |
+        sqlcmd -S localhost -E -Q "
+          BACKUP DATABASE [{{ item | trim }}]
+          TO DISK = N'{{ backup_dest }}\{{ item | trim }}.bak'
+          WITH COMPRESSION, FORMAT, INIT;"
+      loop: "{{ user_dbs.stdout_lines | select('match', '^[A-Za-z]') | list }}"
+
+    - name: Stop SQL Server Agent
+      ansible.windows.win_service:
+        name: SQLSERVERAGENT
+        state: stopped
+      ignore_errors: true
+
+    - name: Stop SQL Server
+      ansible.windows.win_service:
+        name: MSSQLSERVER
+        state: stopped
+
+    - name: Apply Windows OS patches
+      ansible.windows.win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        state: installed
+        reboot: false
+      register: os_updates
+
+    - name: Download SQL Server CU
+      ansible.windows.win_get_url:
+        url: "{{ sql_cu_url }}"
+        dest: 'C:\temp\{{ sql_cu_filename }}'
+      when: sql_cu_url | length > 0
+
+    - name: Apply SQL Server CU
+      ansible.windows.win_shell: |
+        Start-Process 'C:\temp\{{ sql_cu_filename }}' `
+          -ArgumentList "/quiet /IAcceptSQLServerLicenseTerms /Action=Patch /InstanceName=MSSQLSERVER" `
+          -Wait
+      when: sql_cu_url | length > 0
+
+    - name: Reboot
+      ansible.windows.win_reboot:
+        post_reboot_delay: 30
+
+    - name: Start SQL Server
+      ansible.windows.win_service:
+        name: MSSQLSERVER
+        state: started
+
+    - name: Wait for SQL Server to be ready
+      ansible.windows.win_wait_for:
+        port: 1433
+        timeout: 120
+
+    - name: Start SQL Server Agent
+      ansible.windows.win_service:
+        name: SQLSERVERAGENT
+        state: started
+      ignore_errors: true
+
+    - name: Verify all databases are ONLINE
+      ansible.windows.win_shell: |
+        sqlcmd -S localhost -E -Q "
+          SELECT name, state_desc FROM sys.databases
+          WHERE state_desc != 'ONLINE'" -h -1 -W
+      register: offline_dbs
+      failed_when: offline_dbs.stdout | trim | length > 0
+
+    - name: Capture post-patch SQL version
+      ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
+      register: post_version
+
+    - name: Patch summary
+      ansible.builtin.debug:
+        msg:
+          - "BEFORE : {{ pre_version.stdout_lines | select('match', 'Microsoft SQL') | first | default('see logs') }}"
+          - "AFTER  : {{ post_version.stdout_lines | select('match', 'Microsoft SQL') | first | default('see logs') }}"
+          - "OS updates installed: {{ os_updates.installed_update_count }}"
+          - "All databases: ONLINE"
