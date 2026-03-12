@@ -4,6 +4,11 @@
   gather_facts: true
 
   tasks:
+    - name: Create temp folder
+      ansible.windows.win_file:
+        path: C:\temp
+        state: directory
+
 
     - name: Download SQL Server 2022 ISO to target
       ansible.windows.win_get_url:
