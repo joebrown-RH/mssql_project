@@ -9,6 +9,15 @@
     backup_dest: 'C:\SQLBACKUP\PrePatch'
 
   tasks:
+    - name: Create temp folder
+      ansible.windows.win_file:
+        path: C:\temp
+        state: directory
+
+    - name: Create backup folder
+      ansible.windows.win_file:
+        path: "{{ backup_dest }}"
+        state: directory
 
     - name: Capture pre-patch SQL version
       ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
