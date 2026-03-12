@@ -13,12 +13,14 @@
     - name: Capture pre-patch SQL version
       ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
       register: pre_version
+      check_mode: false
 
     - name: Get list of user databases
       ansible.windows.win_shell: |
         sqlcmd -S localhost -E -Q "SET NOCOUNT ON;
           SELECT name FROM sys.databases WHERE database_id > 4 AND state_desc = 'ONLINE'" -h -1 -W
       register: user_dbs
+      check_mode: false
 
     - name: Backup all user databases
       ansible.windows.win_shell: |
@@ -92,6 +94,7 @@
     - name: Capture post-patch SQL version
       ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
       register: post_version
+      check_mode: false
 
     - name: Patch summary
       ansible.builtin.debug:
