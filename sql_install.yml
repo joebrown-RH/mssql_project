@@ -10,6 +10,31 @@
         url: "https://download.microsoft.com/download/3/8/d/38de7036-2433-4207-8eae-06e247e17b25/SQLServer2022-x64-ENU-Dev.iso"
         dest: "C:\\temp\\SQLServer2022-x64-ENU-Dev.iso"
 
+    - name: Create Test-NumErrorLogs.sql
+      ansible.windows.win_copy:
+        dest: "C:\\temp\\Test-NumErrorLogs.sql"
+        content: |
+          IF (SELECT COUNT(*) FROM sys.configurations WHERE name = 'max number of error logs' AND value_in_use = 12) = 1
+          BEGIN
+            SELECT 1
+          END
+
+    - name: Create Set-NumErrorLogs.sql
+      ansible.windows.win_copy:
+        dest: "C:\\temp\\Set-NumErrorLogs.sql"
+        content: |
+          EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE',
+            N'Software\Microsoft\MSSQLServer\MSSQLServer',
+            N'NumErrorLogs', REG_DWORD, 12
+
+    - name: Create Get-NumErrorLogs.sql
+      ansible.windows.win_copy:
+       dest: "C:\\temp\\Get-NumErrorLogs.sql"
+       content: |
+         SELECT value_in_use
+         FROM sys.configurations
+         WHERE name = 'max number of error logs'
+
     - name: Import the sql_install role
       ansible.builtin.import_role:
         name: automatesql.mssql.sql_install
