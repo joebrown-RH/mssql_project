@@ -1,0 +1,38 @@
+- name: Clean up previous failed SQL Server install attempts
+  hosts: all
+  gather_facts: true
+  tasks:
+
+    - name: Remove SQL Server registry keys from failed install
+      ansible.windows.win_regedit:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQLSERVER'
+        - 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL'
+        - 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\160'
+      ignore_errors: true
+
+    - name: Remove SQL Server temp install files
+      ansible.windows.win_file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - 'C:\temp\SQLServer2022-x64-ENU-Dev.iso'
+        - 'C:\SQLDATA'
+        - 'C:\SQLLOGS'
+        - 'C:\SQLBACKUP'
+        - 'C:\SQLTEMPDB'
+      ignore_errors: true
+
+    - name: Remove SQL Server Bootstrap logs
+      ansible.windows.win_file:
+        path: 'C:\Program Files\Microsoft SQL Server\160\Setup Bootstrap'
+        state: absent
+      ignore_errors: true
+
+    - name: Unmount ISO if still mounted
+      community.windows.win_disk_image:
+        image_path: 'C:\temp\SQLServer2022-x64-ENU-Dev.iso'
+        state: absent
+      ignore_errors: true
