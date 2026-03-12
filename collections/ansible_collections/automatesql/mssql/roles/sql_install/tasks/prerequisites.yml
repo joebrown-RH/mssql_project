@@ -46,7 +46,6 @@
   ansible.windows.win_copy:
     src: "files/sql_scripts/"
     dest: "{{ sql_install_temp_folder }}"
-  remote_src: true
 
 
 - name: Mount SQL Server ISO
