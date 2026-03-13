@@ -98,7 +98,7 @@
           SELECT name, state_desc FROM sys.databases
           WHERE state_desc != 'ONLINE'" -h -1 -W
       register: offline_dbs
-      failed_when: offline_dbs.stdout | trim | length > 0
+      failed_when: offline_dbs.stdout_lines | select('match', '^[A-Za-z]') | list | length > 0
 
     - name: Capture post-patch SQL version
       ansible.windows.win_shell: sqlcmd -S localhost -E -Q "SELECT @@VERSION" -W
