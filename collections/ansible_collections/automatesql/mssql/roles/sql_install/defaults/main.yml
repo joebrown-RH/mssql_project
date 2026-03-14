@@ -6,9 +6,9 @@
 # =============================================================================
 # Defines the disk layout for SQL Server data, logs, and TempDB.
 sql_install_disks_to_format:
-  - { number: 1, letter: "T", label: "TEMPDB" }
-  - { number: 2, letter: "E", label: "DATA" }
-  - { number: 3, letter: "F", label: "LOG" }
+  - { number: 1, letter: T, label: TEMPDB }
+  - { number: 2, letter: E, label: DATA }
+  - { number: 3, letter: F, label: LOG }
 
 sql_install_prep_disks: "false"
 
@@ -16,7 +16,7 @@ sql_install_prep_disks: "false"
 # SQL Server Installation Media
 # =============================================================================
 # Specifies the location and version of the SQL Server installation media.
-sql_install_share: "/home/username/ISO/"  # UNC path to the share or local path on the control node containing the ISO
+sql_install_share: /home/username/ISO/ # UNC path to the share or local path on the control node containing the ISO
 sql_install_iso_source:
   - name: SQLServer2025-x64-ENU.iso
     version: SQL2025
@@ -30,7 +30,7 @@ sql_install_update_source:
 # Core SQL Server Settings
 # =============================================================================
 # General settings for the SQL Server installation.
-sql_install_edition: "Standard Developer"
+sql_install_edition: Standard Developer
 sql_install_features: SQLENGINE,REPLICATION,FULLTEXT,IS
 sql_install_instance_name: MSSQLSERVER
 sql_install_sqlcollation: SQL_Latin1_General_CP1_CI_AS
@@ -57,11 +57,11 @@ sql_install_sql_svc_account:
 # sql_install_sql_svc_password: 'notused'  # Default to "notused" if not defined
 sql_install_agent_svc_account:
 # sql_install_agent_svc_password: 'notused'  # Default to "notused" if not defined
-sql_install_sql_svc_startup_type: "Automatic"
-sql_install_agent_svc_startup_type: "Automatic"
-sql_install_sysadminaccount: "Administrators"
-sql_install_sapwd: ""  # Use Ansible Vault for production
-sql_install_security_mode: "SQL"
+sql_install_sql_svc_startup_type: Automatic
+sql_install_agent_svc_startup_type: Automatic
+sql_install_sysadminaccount: Administrators
+sql_install_sapwd: "" # Use Ansible Vault for production
+sql_install_security_mode: SQL
 sql_install_sqlsvcinstantfileinit: "true"
 
 # =============================================================================
@@ -95,7 +95,7 @@ sql_install_install_ssisdb: "true"
 # =============================================================================
 # Windows and SQL Server update settings.
 sql_install_enableupdates: "true"
-sql_install_update_source_path: ""  # Dynamically set in install.yml
+sql_install_update_source_path: "" # Dynamically set in install.yml
 
 # =============================================================================
 # Database Mail
@@ -106,13 +106,13 @@ sql_install_dbagent_operator:
     email: DBATeam@bogusdomain.com
 
 sql_install_dbmail:
-  - mailservername: "relayer.bogus.net"
-    accountname: "DBMail"
-    profilename: "DBMailProfile"
-    description: "Default mail account and profile."
-    emailaddress: "noreply@bogusdomain.com"
-    replytoaddress: "noreply@bogusdomain.com"
-    logginglevel: "Normal"
+  - mailservername: relayer.bogus.net
+    accountname: DBMail
+    profilename: DBMailProfile
+    description: Default mail account and profile.
+    emailaddress: noreply@bogusdomain.com
+    replytoaddress: noreply@bogusdomain.com
+    logginglevel: Normal
     tcpport: 25
 
 # =============================================================================
@@ -124,23 +124,23 @@ sql_install_sqlagent_operator:
     email: DBATeam@bogusdomain.com
 
 sql_install_sqlagent_alerts:
-  - { name: "Severity 016", message_id: 0, severity: 16, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 017", message_id: 0, severity: 17, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 018", message_id: 0, severity: 18, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 019", message_id: 0, severity: 19, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 020", message_id: 0, severity: 20, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 021", message_id: 0, severity: 21, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 022", message_id: 0, severity: 22, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 023", message_id: 0, severity: 23, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 024", message_id: 0, severity: 24, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Severity 025", message_id: 0, severity: 25, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Error Number 824", message_id: 824, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Error Number 825", message_id: 825, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Error Number 826", message_id: 826, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
-  - { name: "Error Number 829", message_id: 829, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 016, message_id: 0, severity: 16, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 017, message_id: 0, severity: 17, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 018, message_id: 0, severity: 18, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 019, message_id: 0, severity: 19, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 020, message_id: 0, severity: 20, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 021, message_id: 0, severity: 21, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 022, message_id: 0, severity: 22, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 023, message_id: 0, severity: 23, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 024, message_id: 0, severity: 24, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Severity 025, message_id: 0, severity: 25, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Error Number 824, message_id: 824, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Error Number 825, message_id: 825, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Error Number 826, message_id: 826, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
+  - { name: Error Number 829, message_id: 829, severity: 0, enabled: 1, delay_between_responses: 60, include_event_description: 1 }
 
 # =============================================================================
 # Miscellaneous
 # =============================================================================
-sql_install_source_path: ""  # Dynamically set in install.yml
+sql_install_source_path: "" # Dynamically set in install.yml
 sql_install_product_key: ""
