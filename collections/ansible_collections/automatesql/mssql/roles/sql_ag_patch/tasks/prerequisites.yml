@@ -9,9 +9,9 @@
 - name: Verify SHA256 checksum of the patch executable
   ansible.builtin.assert:
     that:
-      - "patch_file_stat.stat.checksum | lower == sql_patch_checksum | lower"
-    fail_msg: "Checksum mismatch for {{ sql_patch_filename }}. Expected '{{ sql_patch_checksum | lower }}' but got '{{ patch_file_stat.stat.checksum | lower }}'."
-    success_msg: "Checksum for {{ sql_patch_filename }} verified successfully."
+      - patch_file_stat.stat.checksum | lower == sql_patch_checksum | lower
+    fail_msg: Checksum mismatch for {{ sql_patch_filename }}. Expected '{{ sql_patch_checksum | lower }}' but got '{{ patch_file_stat.stat.checksum | lower }}'.
+    success_msg: Checksum for {{ sql_patch_filename }} verified successfully.
 
 # fact building.  Facts are used to ensure idemotency is enforced.
 - name: Set the server_instance variable conditionally
@@ -41,7 +41,7 @@
       block:
         - name: Report that the instance is already patched and notify for cleanup
           ansible.builtin.debug:
-            msg: "Skipping patch. SQL Server on {{ server_instance }} is already at the desired version ({{ desired_sql_version }})."
+            msg: Skipping patch. SQL Server on {{ server_instance }} is already at the desired version ({{ desired_sql_version }}).
           notify: Uninstall SqlServer module on failure
 
         - name: End play for host
@@ -61,11 +61,11 @@
           {% else %}
           - **Patch version too high!** The patch is designed for an older version than what is installed.
           {% endif %}
-        success_msg: "SQL Server version check passed."
+        success_msg: SQL Server version check passed.
 
 - name: Initialize fact for new_primary with default
   ansible.builtin.set_fact:
-    new_primary: "default_value"
+    new_primary: default_value
 
 # Most of the PowerShell commandlets used in this role use PowerShell paths which require DEFAULT as the instance name for default instances.
 # However, the patch exe expects the instance name to be MSSQLSERVER if we're patching the default instance.  So we need another fact to handle this.
