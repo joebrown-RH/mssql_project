@@ -1,9 +1,19 @@
 ---
 - name: Install SQL Server using the sql_install role
   hosts: all
-  gather_facts: true
+  gather_facts: false
+
+  
 
   tasks:
+
+    - name: Wait for WinRM to be available
+      ansible.builtin.wait_for_connection:
+        delay: 30        # wait 30s before first attempt
+        timeout: 600     # keep trying for up to 10 minutes
+        sleep: 15        # retry every 15 seconds
+
+  
     - name: Create temp folder
       ansible.windows.win_file:
         path: C:\temp
