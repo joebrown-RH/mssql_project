@@ -2,9 +2,9 @@
 - name: Enable CLR needed for SSISDB
   ansible.windows.win_dsc:
     resource_name: SQLConfiguration
-    OptionName: "clr enabled"
+    OptionName: clr enabled
     OptionValue: 1
-    ServerName: "localhost"
+    ServerName: localhost
     InstanceName: "{{ sql_install_instance_name }}"
 
 - name: Setup the Integration Services Catalog (Conditional)
