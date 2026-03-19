@@ -5,8 +5,8 @@
 
   vars:
     sql_cu_url: ""
-    sql_cu_filename: "SQLServer2022-CU-latest.exe"
-    backup_dest: 'C:\SQLBACKUP\PrePatch'
+    sql_cu_filename: SQLServer2022-CU-latest.exe
+    backup_dest: C:\SQLBACKUP\PrePatch
 
   tasks:
     - name: Create temp folder
@@ -62,7 +62,7 @@
     - name: Download SQL Server CU
       ansible.windows.win_get_url:
         url: "{{ sql_cu_url }}"
-        dest: 'C:\temp\{{ sql_cu_filename }}'
+        dest: C:\temp\{{ sql_cu_filename }}
       when: sql_cu_url | length > 0
 
     - name: Apply SQL Server CU

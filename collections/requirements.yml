@@ -15,7 +15,7 @@ collections:
     type: git
 
   - name: automatesql.mssql
-    version: "1.2.2"
+    version: 1.2.2
 
   # TO-DO: User's own collections can also be specified as mention below.
   # - name: my_organization.my_collection
