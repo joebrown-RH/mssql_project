@@ -7,6 +7,6 @@
 
 - name: Return disk allocation verification failure
   ansible.builtin.fail:
-    msg: "Please ensure disks have been formatted using 64kb blocks. {{ (diskAllocationError.stdout) }}"
+    msg: Please ensure disks have been formatted using 64kb blocks. {{ (diskAllocationError.stdout) }}
   when:
     - diskAllocationError.stdout
