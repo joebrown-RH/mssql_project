@@ -11,7 +11,7 @@ This project provides a set of playbooks and roles to fully automate the lifecyc
 ### AAP Workflow
 
 ```
-[Provision EC2 (Windows 2019)] --> [Install & Configure SQL Server 2022] --> [Patch OS + SQL Server CU]
+[Provision EC2 (Windows)] --> [Install & Configure SQL Server 2022] --> [Patch OS + SQL Server CU]
 ```
 
 ---
@@ -40,9 +40,9 @@ mssql_project/
 ## Prerequisites
 
 ### AAP / Controller
-- Ansible Automation Platform 2.x on OpenShift
+- Ansible Automation Platform 2.x
 - Windows host reachable via WinRM/CredSSP on port 5986
-- Credential configured with `ec2-user` and appropriate Windows credentials
+- Credential configured with AWS permissions and appropriate Windows credentials
 - The `automatesql.mssql` collection is bundled in `collections/` — no `requirements_collections` needed
 
 ### Windows Host
@@ -120,7 +120,7 @@ These variables must be set as **Extra Variables** in your AAP Job Template. The
 | `sql_install_features` | Yes | `SQLENGINE,REPLICATION,FULLTEXT` | SQL Server features to install. Remove `IS` (Integration Services) unless needed |
 | `sql_install_edition` | Yes | `Developer` | SQL Server edition. Use `Developer` for the Dev ISO |
 | `sql_install_product_key` | Yes | `""` | Leave blank for Developer edition — the ISO encodes the edition |
-| `sql_install_sapwd` | Yes | `R3dH@t!` | SA account password. Use a vault-encrypted value in production |
+| `sql_install_sapwd` | Yes | `CHANGEME` | SA account password. Use a vault-encrypted value in production |
 | `sql_install_sql_svc_account` | Yes | `NT AUTHORITY\SYSTEM` | SQL Server service account |
 | `sql_install_agent_svc_account` | Yes | `NT AUTHORITY\SYSTEM` | SQL Agent service account |
 | `sql_install_installdb_path` | Yes | `C:` | Root path for SQL system databases |
